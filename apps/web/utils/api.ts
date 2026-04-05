@@ -44,9 +44,11 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         // If the REFRESH token is also expired, they must log in again.
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        window.location.href = "/signin"; // Redirect to login page
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.href = "/signin";
+        }
         return Promise.reject(refreshError);
       }
     }

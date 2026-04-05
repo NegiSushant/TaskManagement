@@ -1,11 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import LogoutModal from "./LogoutModal";
 
-export default function Sidebar() {
+function SidebarFunc() {
   const searchParams = useSearchParams();
   const currentFilter = searchParams.get("filter") || "ALL";
 
@@ -74,73 +75,16 @@ export default function Sidebar() {
   );
 }
 
-// "use client";
-
-// import Link from "next/link";
-// import { useSearchParams } from "next/navigation";
-
-// export default function Sidebar() {
-//   const searchParams = useSearchParams();
-//   const currentFilter = searchParams.get("filter") || "ALL";
-
-//   return (
-//     <aside className="w-64 min-h-screen bg-[#020617] border-r border-gray-800 p-6">
-//       <h1 className="text-xl font-bold text-indigo-400 mb-10">TaskFlow</h1>
-
-//       <nav className="flex flex-col gap-4">
-//         <Link
-//           href="/dashboard"
-//           className={`${currentFilter === "ALL" ? "text-indigo-400 font-semibold" : "text-gray-300"} hover:text-indigo-400 transition-colors`}
-//         >
-//           Dashboard
-//         </Link>
-
-//         <Link
-//           href="/dashboard?filter=DONE"
-//           className={`${currentFilter === "DONE" ? "text-indigo-400 font-semibold" : "text-gray-300"} hover:text-indigo-400 transition-colors`}
-//         >
-//           Completed Tasks
-//         </Link>
-
-//         <Link
-//           href="/dashboard?filter=TODO"
-//           className={`${currentFilter === "TODO" ? "text-indigo-400 font-semibold" : "text-gray-300"} hover:text-indigo-400 transition-colors`}
-//         >
-//           Pending Tasks
-//         </Link>
-//       </nav>
-//     </aside>
-//   );
-// }
-
-// "use client";
-
-// import Link from "next/link";
-
-// export default function Sidebar() {
-//   return (
-//     <aside className="w-64 h-screen bg-[#020617] border-r border-gray-800 p-6">
-//       <h1 className="text-xl font-bold text-indigo-400 mb-10">TaskFlow</h1>
-
-//       <nav className="flex flex-col gap-4">
-//         <Link href="/dashboard" className="text-gray-300 hover:text-indigo-400">
-//           Dashboard
-//         </Link>
-
-//         <Link
-//           href="/dashboard/completed"
-//           className="text-gray-300 hover:text-indigo-400"
-//         >
-//           Completed Tasks
-//         </Link>
-
-//         <Link
-//           href="/dashboard/pending"
-//           className="text-gray-300 hover:text-indigo-400"
-//         >
-//           Pending Tasks
-//         </Link>
-//       </nav>
-//     </aside>
-//   );
-// }
+export default function Sidebar() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#0f172a] text-white p-10">
+          Loading Dashboard...
+        </div>
+      }
+    >
+      <SidebarFunc />
+    </Suspense>
+  );
+}

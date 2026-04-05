@@ -5,7 +5,14 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000" }));
+// app.use(cors({ origin: "http://localhost:3000" }));
+
+const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:3000";
+
+app.use(cors({ 
+  origin: allowedOrigin,
+  credentials: true
+}));
 
 app.use("/auth", authRoute);
 app.use("/task", taskRouter);
