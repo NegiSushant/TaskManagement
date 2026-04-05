@@ -7,9 +7,9 @@
 ![Turborepo](https://img.shields.io/badge/Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-**Live Demo:** [https://task-management-web-bice.vercel.app]  
-**Username:** [testdemo@email.com]
-**password:** [1234567890]
+**Live Demo:** https://task-management-web-bice.vercel.app  
+**Username:** testdemo@email.com  
+**password:** 1234567890
 
 ## 📖 Overview
 TaskFlow is a production-ready, full-stack task management application built to demonstrate modern web development practices. It features a completely separated Next.js frontend and Express backend, united in a **Turborepo monorepo** to share database schemas and types. 
