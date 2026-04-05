@@ -40,7 +40,7 @@ task-management/
 │   ├── comman/            # Shared schema validations
 │   └── eslint-config/     # Shared linting rules
 
-
+```
 ## 💻 Tech Stack
 
 * **Frontend:** Next.js (React), Tailwind CSS, Axios
@@ -61,11 +61,11 @@ task-management/
 ```bash
 git clone [https://github.com/yourusername/TaskManagement.git](https://github.com/yourusername/TaskManagement.git)
 cd TaskManagement
-
+```
 ### 2. Install Dependencies
 ```bash
 pnpm install
-
+```
 ### 3. Environment Setup
 Create a `.env` file in the root of the project (or inside `packages/db` and `apps/backend` respectively) and add the following:
 
@@ -80,14 +80,14 @@ JWT_REFRESH_SECRET="your_super_secret_refresh_key"
 
 # Frontend Configuration
 NEXT_PUBLIC_HTTP_BACKEND="http://localhost:8080"
-
+```
 ### 4. Database Initialization
 Push the Prisma schema to your local database and generate the client:
 
 ```bash
 pnpm --filter @repo/db run push
 pnpm --filter @repo/db run generate
-
+```
 ### 5. Start the Application
 Run the entire monorepo concurrently using Turborepo:
 
@@ -96,7 +96,7 @@ pnpm run dev
 The frontend will be available at: http://localhost:3000
 
 The backend will be available at: http://localhost:8080
-
+```
 ## ☁️ Deployment Strategy
 This monorepo uses a split deployment strategy to optimize hosting environments.
 
