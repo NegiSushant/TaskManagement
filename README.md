@@ -7,8 +7,9 @@
 ![Turborepo](https://img.shields.io/badge/Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-**Live Demo:** [Insert your Vercel URL here]  
-**Backend API:** [Insert your Render URL here]  
+**Live Demo:** [https://task-management-web-bice.vercel.app]  
+**Username:** [testdemo@email.com]
+**password:** [1234567890]
 
 ## 📖 Overview
 TaskFlow is a production-ready, full-stack task management application built to demonstrate modern web development practices. It features a completely separated Next.js frontend and Express backend, united in a **Turborepo monorepo** to share database schemas and types. 
@@ -38,3 +39,86 @@ task-management/
 │   ├── typescript-config/ # Shared tsconfig.json
 │   ├── comman/            # Shared schema validations
 │   └── eslint-config/     # Shared linting rules
+
+
+## 💻 Tech Stack
+
+* **Frontend:** Next.js (React), Tailwind CSS, Axios
+* **Backend:** Node.js, Express.js, Zod (Validation), JSON Web Tokens (JWT), Bcrypt
+* **Database:** PostgreSQL (Supabase / Neon), Prisma ORM
+* **DevOps/Deployment:** Vercel (Frontend), Render (Backend), Turborepo
+
+---
+
+## 🚀 Getting Started (Local Development)
+
+### Prerequisites
+* Node.js (v18+)
+* `pnpm` installed (`npm install -g pnpm`)
+* A local PostgreSQL database (or Docker)
+
+### 1. Clone the repository
+```bash
+git clone [https://github.com/yourusername/TaskManagement.git](https://github.com/yourusername/TaskManagement.git)
+cd TaskManagement
+
+### 2. Install Dependencies
+```bash
+pnpm install
+
+### 3. Environment Setup
+Create a `.env` file in the root of the project (or inside `packages/db` and `apps/backend` respectively) and add the following:
+
+```env
+# Database
+DATABASE_URL="PostgreSQL://postgres:mysecretpassword@localhost:5432/postgres" # Run database in docker
+DIRECT_URL="postgresql://postgres:password@localhost:5432/mydb" # Required if using Supabase
+
+# Backend Auth Secrets
+JWT_ACCESS_SECRET="your_super_secret_access_key"
+JWT_REFRESH_SECRET="your_super_secret_refresh_key"
+
+# Frontend Configuration
+NEXT_PUBLIC_HTTP_BACKEND="http://localhost:8080"
+
+### 4. Database Initialization
+Push the Prisma schema to your local database and generate the client:
+
+```bash
+pnpm --filter @repo/db run push
+pnpm --filter @repo/db run generate
+
+### 5. Start the Application
+Run the entire monorepo concurrently using Turborepo:
+
+```bash
+pnpm run dev
+The frontend will be available at: http://localhost:3000
+
+The backend will be available at: http://localhost:8080
+
+## ☁️ Deployment Strategy
+This monorepo uses a split deployment strategy to optimize hosting environments.
+
+### 1. Database (Supabase / Neon)
+We use a Transaction (Pooled) Connection (port 6543) for the Express app to handle high traffic efficiently.
+
+We use a Session (Direct) Connection (port 5432) mapped to the DIRECT_URL environment variable specifically for Prisma schema pushes (pnpm prisma db push).
+
+### 2. Backend API (Render)
+Deployed as a Node Web Service on Render.
+
+* **Build Command**: pnpm install && pnpm --filter @repo/db run generate && pnpm run build --filter backend
+* **Start Command**: cd apps/backend && pnpm run start
+* **CORS Configuration**: Configured to accept requests strictly from the deployed Vercel frontend URL.
+
+### 3. Frontend Web App (Vercel)
+* Deployed on Vercel for edge-optimized static and server-rendered delivery.
+* Vercel automatically detects the Turborepo workspace.
+* NEXT_PUBLIC_HTTP_BACKEND is configured to point to the live Render URL.
+* Client components interacting with URL search parameters (like filters) are wrapped in <Suspense> boundaries to prevent static prerendering build errors.
+
+## 🔮 Future Improvements
+* Add React Query (@tanstack/react-query) for advanced server-state caching.
+* Implement a Next.js Edge Middleware for route protection before rendering.
+* Add drag-and-drop task reordering functionality.
