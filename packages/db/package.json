@@ -8,7 +8,9 @@
     "./client": "./src/index.js"
   },
   "scripts": {
-    "build": "tsc -b",
+    "generate": "prisma generate",
+    "build": "pnpm run generate && tsc -b", 
+    "push": "prisma db push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
